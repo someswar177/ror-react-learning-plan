@@ -11,7 +11,7 @@ test('renders todo input field', () => {
     expect(input).toBeInTheDocument();
 })
 
-test('add a todo item', async () => {
+test('updates input value when user types', async () => {
     render(<TodoList />);
 
     const input = screen.getByPlaceholderText('Add a todo');
@@ -22,14 +22,17 @@ test('add a todo item', async () => {
 })
 
 test('adds todo item to list when button clicked', async () => {
-    render(<TodoList />);
-    const input = screen.getByPlaceholderText('Add a todo');
-    const button = screen.getByRole('button', { name: /add/i });
+  const user = userEvent.setup();
 
-    await userEvent.type(input, 'Learn React Testing Library');
-    await userEvent.click(button);
+  render(<TodoList />);
 
-    expect(screen.getByText('Learn React Testing Library')).toBeInTheDocument();
+  const input = screen.getByPlaceholderText('Add a todo');
+  const button = screen.getByRole('button', { name: /add/i });
+
+  await user.type(input, 'Learn React Testing Library');
+  await user.click(button);
+
+  expect(screen.getByText('Learn React Testing Library')).toBeInTheDocument();
 })
 
 test('calls callback when button clicked', async () => {

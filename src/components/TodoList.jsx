@@ -8,7 +8,7 @@ function TodoList() {
   function addTodo() {
     if (!todo) return;
 
-    setTodos([...todos, todo]);
+    setTodos((prev) => [...prev, todo]);
     setTodo("");
   }
 
