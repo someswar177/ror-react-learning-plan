@@ -3,11 +3,11 @@ class PostsController < ApplicationController
 
     def index
         @posts = Post.all
-        render json: @posts
+        render json: @posts, status: :ok
     end
 
     def show
-        render json: @post
+        render json: @post, status: :ok
     end
 
     def create
