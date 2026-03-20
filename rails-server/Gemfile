@@ -52,3 +52,9 @@ end
 gem "rspec-rails", "~> 8.0", groups: [:development, :test]
 
 gem "graphql", "~> 2.5"
+
+group :development do
+  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  gem 'graphiql-rails'
+  gem 'faker'
+end
