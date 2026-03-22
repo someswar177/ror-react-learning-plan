@@ -1,20 +1,27 @@
-import { useState } from 'react'
-import { Container, Heading, Theme } from '@chakra-ui/react';
-import TodoList from './components/TodoList';
-import TodoProvider from './components/TodoContext';
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 
-
+const GET_USERS = gql`
+  query GetUsers {
+    users {
+      id
+      name
+      email
+    }
+  }
+`;
 function App() {
-  return (
-    <Theme appearance='light'>
-      <TodoProvider>
-        <Container centerContent minH="100vh" minW="220px" px={{ base: 4, md: 8 }}>
-          <Heading p={5} m={5} fontSize={{ base: "2xl", md: "4xl" }}>Todo App</Heading>
-          <TodoList />
-        </Container>
-      </TodoProvider>
-    </Theme>
-  );
+  const { loading, error, data } = useQuery(GET_USERS);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error : {error.message}</p>;
+
+  return data.users.map(({ id, name, email }) => (
+    <div key={id}>
+      <h3>{name}</h3>
+      <p>{email}</p>
+    </div>
+  ));
 }
 
-export default App
+export default App;
