@@ -58,3 +58,5 @@ group :development do
   gem 'graphiql-rails'
   gem 'faker'
 end
+
+gem "strong_migrations", "~> 2.5"
