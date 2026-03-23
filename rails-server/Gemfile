@@ -33,7 +33,7 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
-gem "rack-cors"
+# gem "rack-cors"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -47,21 +47,4 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-end
-
-gem "rspec-rails", "~> 8.0", groups: [:development, :test]
-
-gem "graphql", "~> 2.5"
-
-group :development do
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'graphiql-rails'
-  gem 'faker'
-end
-
-gem "strong_migrations", "~> 2.5"
-
-group :test do
-  gem 'vcr'
-  gem 'webmock'
 end
