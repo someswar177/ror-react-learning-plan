@@ -48,3 +48,8 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 end
+
+gem "graphql", "~> 2.5"
+gem "rack-cors", "~> 3.0"
+
+gem "graphiql-rails", "~> 1.10", group: :development
