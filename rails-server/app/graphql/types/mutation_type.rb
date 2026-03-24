@@ -2,14 +2,13 @@
 
 module Types
   class MutationType < Types::BaseObject
-    field :delete_cart_item, mutation: Mutations::DeleteCartItem
-    field :delete_cart, mutation: Mutations::DeleteCart
-    field :delete_product, mutation: Mutations::DeleteProduct
-    field :update_cart_item, mutation: Mutations::UpdateCartItem
-    field :update_cart, mutation: Mutations::UpdateCart
-    field :update_product, mutation: Mutations::UpdateProduct
-    field :create_cart_item, mutation: Mutations::CreateCartItem
+    field :remove_from_cart, mutation: Mutations::RemoveFromCart
+    field :update_cart_item_quantity, mutation: Mutations::UpdateCartItemQuantity
+    field :add_to_cart, mutation: Mutations::AddToCart
+    field :empty_cart, mutation: Mutations::EmptyCart
     field :create_cart, mutation: Mutations::CreateCart
+    field :delete_product, mutation: Mutations::DeleteProduct
+    field :update_product, mutation: Mutations::UpdateProduct
     field :create_product, mutation: Mutations::CreateProduct
     field :delete_user, mutation: Mutations::DeleteUser
     field :update_user, mutation: Mutations::UpdateUser

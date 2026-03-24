@@ -53,3 +53,5 @@ gem "graphql", "~> 2.5"
 gem "rack-cors", "~> 3.0"
 
 gem "graphiql-rails", "~> 1.10", group: :development
+
+gem "strong_migrations", "~> 2.5"

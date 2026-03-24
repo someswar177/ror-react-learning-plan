@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Mutations
-  class DeleteCart < BaseMutation
+  class RemoveFromCart < BaseMutation
     # TODO: define return fields
     # field :post, Types::PostType, null: false
 
