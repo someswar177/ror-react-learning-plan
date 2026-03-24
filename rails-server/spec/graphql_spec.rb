@@ -13,8 +13,6 @@ RSpec.describe "GraphQL API", type: :request do
           }
           json = JSON.parse(response.body)
 
-          puts json
-
           expect(json["data"]["users"].length).to eq(1)
           expect(json["data"]["users"][0]["name"]).to eq("somu")
           expect(json["data"]["users"][0]).to eq({"name"=>"somu","email"=>"somu@example.com"})
@@ -35,6 +33,31 @@ RSpec.describe "GraphQL API", type: :request do
 
           expect(json["data"]["user"]["name"]).to eq("somu")
         end
+  end
+
+  describe "Mutation: User" do
+    it "creates user" do
+      post "/graphql", params:{
+        query: <<~GQL
+          mutation {
+            createUser(input:{name:"somu",email:"somu@example.com"}){
+            user{
+              id
+              name
+              email
+            }
+            errors
+          }
+          }
+        GQL
+      }
+
+    json = JSON.parse(response.body)
+
+    puts json
+
+    expect(json["data"]["createUser"]["name"]).to eq("somu")
+    end
   end
   
   describe "Query: Products" do
@@ -71,6 +94,29 @@ RSpec.describe "GraphQL API", type: :request do
       json = JSON.parse(response.body)
 
       expect(json["data"]["product"]["name"]).to eq("Chair")
+    end
+  end
+
+  describe "Mutation: Product" do
+    it "creates product" do
+      post "/graphql", params:{
+        query: <<~GQL
+          mutation{
+            createProduct(input:{name:"chair",price:3000,description:"study chair"}){
+            product{
+              id
+              name
+              price
+              description
+            }
+          }
+          }
+        GQL
+      }
+
+      json = JSON.parse(response.body)
+
+      expect(json["data"]["createProduct"]["name"]).to eq("chair");
     end
   end
 end
