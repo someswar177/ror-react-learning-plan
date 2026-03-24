@@ -7,6 +7,7 @@ RSpec.describe "GraphQL API", type: :request do
             query:"{
               users{
                 name
+                email
               }
             }"
           }
@@ -15,6 +16,8 @@ RSpec.describe "GraphQL API", type: :request do
           puts json
 
           expect(json["data"]["users"].length).to eq(1)
+          expect(json["data"]["users"][0]["name"]).to eq("somu")
+          expect(json["data"]["users"][0]).to eq({"name"=>"somu","email"=>"somu@example.com"})
         end
   end  
 end
