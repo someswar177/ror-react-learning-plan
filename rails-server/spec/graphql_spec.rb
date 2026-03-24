@@ -35,6 +35,42 @@ RSpec.describe "GraphQL API", type: :request do
 
           expect(json["data"]["user"]["name"]).to eq("somu")
         end
+  end
+  
+  describe "Query: Products" do
+    it "returns products" do
+      Product.create(name:"Chair",price:3000,description:"Office Chair")
+      post "/graphql", params:{
+        query:"{
+          products{
+            name
+            price
+            description
+          }
+        }"
+      }
 
-  end  
+      json = JSON.parse(response.body)
+
+      expect(json["data"]["products"][0]["name"]).to eq("Chair")
+      expect(json["data"]["products"].length).to eq(1)
+    end
+
+    it "returns product" do
+      product = Product.create(name:"Chair",price:3000,description:"Office Chair")
+      post "/graphql", params:{
+        query:"{
+          product(id:#{product.id}){
+            name
+            price
+            description
+          }
+        }"
+      }
+
+      json = JSON.parse(response.body)
+
+      expect(json["data"]["product"]["name"]).to eq("Chair")
+    end
+  end
 end
