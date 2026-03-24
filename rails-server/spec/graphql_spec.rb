@@ -54,9 +54,7 @@ RSpec.describe "GraphQL API", type: :request do
 
     json = JSON.parse(response.body)
 
-    puts json
-
-    expect(json["data"]["createUser"]["name"]).to eq("somu")
+    expect(json["data"]["createUser"]["user"]["name"]).to eq("somu")
     end
   end
   
@@ -116,7 +114,7 @@ RSpec.describe "GraphQL API", type: :request do
 
       json = JSON.parse(response.body)
 
-      expect(json["data"]["createProduct"]["name"]).to eq("chair");
+      expect(json["data"]["createProduct"]["product"]["name"]).to eq("chair");
     end
   end
 end
