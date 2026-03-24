@@ -56,6 +56,41 @@ RSpec.describe "GraphQL API", type: :request do
 
     expect(json["data"]["createUser"]["user"]["name"]).to eq("somu")
     end
+
+    it "updates user" do
+      user = User.create(name: "Old Name", email: "old@example.com")
+      post "/graphql", params: {
+        query: <<~GQL,
+          mutation($id: ID!, $name: String!) {
+            updateUser(input: { id: $id, name: $name }) {
+              user { name }
+            }
+          }
+        GQL
+        variables: { id: user.id, name: "New Name" }
+      }, as: :json
+
+      json = JSON.parse(response.body)
+      expect(json["data"]["updateUser"]["user"]["name"]).to eq("New Name")
+    end
+
+    it "deletes user" do
+      user = User.create(name: "Delete Me", email: "gone@example.com")
+      post "/graphql", params: {
+        query: <<~GQL,
+          mutation($id: ID!) {
+            deleteUser(input: { id: $id }) {
+              message
+            }
+          }
+        GQL
+        variables: { id: user.id }
+      }, as: :json
+
+      json = JSON.parse(response.body)
+      expect(json["data"]["deleteUser"]["message"]).to eq("User deleted successfully")
+      expect(User.exists?(user.id)).to be false
+    end
   end
   
   describe "Query: Products" do
@@ -115,6 +150,40 @@ RSpec.describe "GraphQL API", type: :request do
       json = JSON.parse(response.body)
 
       expect(json["data"]["createProduct"]["product"]["name"]).to eq("chair");
+    end
+    it "updates product" do
+      product = Product.create(name: "Old Chair", price: 1000)
+      post "/graphql", params: {
+        query: <<~GQL,
+          mutation($id: ID!, $price: Int!) {
+            updateProduct(input: { id: $id, price: $price }) {
+              product { price }
+            }
+          }
+        GQL
+        variables: { id: product.id, price: 5000 }
+      }, as: :json
+
+      json = JSON.parse(response.body)
+      expect(json["data"]["updateProduct"]["product"]["price"]).to eq(5000)
+    end
+
+    it "deletes product" do
+      product = Product.create(name: "Broken Chair", price: 0)
+      post "/graphql", params: {
+        query: <<~GQL,
+          mutation($id: ID!) {
+            deleteProduct(input: { id: $id }) {
+              message
+            }
+          }
+        GQL
+        variables: { id: product.id }
+      }, as: :json
+
+      json = JSON.parse(response.body)
+      expect(json["data"]["deleteProduct"]["message"]).to eq("Product deleted successfully")
+      expect(Product.exists?(product.id)).to be false
     end
   end
 
