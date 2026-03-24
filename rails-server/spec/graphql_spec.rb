@@ -117,4 +117,130 @@ RSpec.describe "GraphQL API", type: :request do
       expect(json["data"]["createProduct"]["product"]["name"]).to eq("chair");
     end
   end
+
+  describe "Mutations: Cart" do
+    it "creates cart" do
+      user = User.create(name:"somu",email:"somu@example.com")
+      post "/graphql", params:{
+        query:<<~GQL,
+          mutation($userId: ID!){
+            createCart(input:{userId: $userId}){
+              cart{
+                userId                
+              }              
+            }
+          }
+        GQL
+        variables: { userId: user.id }
+      }
+
+      json = JSON.parse(response.body)
+
+      expect(json["errors"]).to be_nil
+      expect(json["data"]["createCart"]["cart"]["userId"]).to eq(user.id)
+    end
+
+    it "empty cart" do
+      user = User.create(name:"somu", email:"somu@example.com")
+      cart = Cart.create(user_id:user.id)
+      product = Product.create(name:"Chair",price:3000,description:"Office Chair")
+      cartItem = CartItem.create(product_id:product.id,cart_id:cart.id,quantity:1)
+
+      post "/graphql", params:{
+        query:<<~GQL,
+          mutation($cartId:ID!){
+            emptyCart(input: {cartId: $cartId}){
+              message
+            }
+          }                  
+        GQL
+        variables: {cartId: cart.id}
+      }
+
+      json = JSON.parse(response.body)
+
+      expect(json["data"]["emptyCart"]["message"]).to eq("Cart Cleared")
+    end
+
+    it "adds an item to the cart" do
+      user = User.create(name:"somu", email:"somu@example.com")
+      cart = Cart.create(user_id:user.id)
+      product = Product.create(name:"Chair",price:3000,description:"Office Chair")
+
+      post "/graphql", params:{
+        query:<<~GQL,
+          mutation($cartId:ID!,$productId:ID!,$quantity:Int!){
+            addToCart(input:{ cartId: $cartId, productId: $productId, quantity: $quantity }){
+              cartItem{
+                quantity
+                product{
+                  name
+                }
+                cart{
+                  user{
+                    name
+                  }
+                }
+              }
+            }
+          }
+        GQL
+        variables: {
+          cartId: cart.id,
+          productId: product.id,
+          quantity: 1
+        }
+      }, as: :json
+
+      json = JSON.parse(response.body)
+
+      expect(json["data"]["addToCart"]["cartItem"]["cart"]["user"]["name"]).to eq("somu")            
+    end
+
+    it "updates cart item quantity" do
+      user = User.create(name:"somu", email:"somu@example.com")
+      cart = Cart.create(user_id:user.id)
+      product = Product.create(name:"Chair",price:3000,description:"Office Chair")
+      cartItem = CartItem.create(product_id:product.id,cart_id:cart.id,quantity:1)
+      
+      post "/graphql", params:{
+        query:<<~GQL,
+          mutation($cartItemId:ID!, $quantity: Int!){
+            updateCartItemQuantity(input:{cartItemId:$cartItemId, quantity:$quantity}){
+              cartItem{
+                quantity
+              }
+            }
+          }
+        GQL
+        variables:{ cartItemId: cartItem.id, quantity: 4 }
+      }, as: :json
+
+      json = JSON.parse(response.body)
+
+      expect(json["data"]["updateCartItemQuantity"]["cartItem"]["quantity"]).to eq(4)
+    end
+
+    it "removes cart item from cart" do
+      user = User.create(name:"somu", email:"somu@example.com")
+      cart = Cart.create(user_id:user.id)
+      product = Product.create(name:"Chair",price:3000,description:"Office Chair")
+      cartItem = CartItem.create(product_id:product.id,cart_id:cart.id,quantity:1)
+      
+      post "/graphql", params:{
+        query:<<~GQL,
+          mutation($cartItemId:ID!){
+            removeFromCart(input:{cartItemId:$cartItemId}){
+              message
+            }
+          }
+        GQL
+        variables:{ cartItemId: cartItem.id }
+      }, as: :json
+
+      json = JSON.parse(response.body)
+
+      expect(json["data"]["removeFromCart"]["message"]).to eq("Item removed from cart!")      
+    end
+  end
 end
