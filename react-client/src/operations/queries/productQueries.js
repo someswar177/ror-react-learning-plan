@@ -9,3 +9,12 @@ export const GET_PRODUCTS = gql`
   }
   ${PRODUCT_FIELDS}
 `;
+
+export const GET_PRODUCT = gql`
+  query GetProduct($id: ID!) {
+    product(id: $id) {
+      ...ProductFields
+    }
+  }
+  ${PRODUCT_FIELDS}
+`;

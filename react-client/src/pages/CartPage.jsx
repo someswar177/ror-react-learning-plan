@@ -2,12 +2,12 @@ import Navbar from "../components/Navbar";
 import Cart from "../components/Cart";
 
 const CartPage = () => {
-    return (
-        <>
-            <Navbar />
-            <Cart />
-        </>
-    );
+  return (
+    <>
+      <Navbar />
+      <Cart />
+    </>
+  );
 };
 
 export default CartPage;

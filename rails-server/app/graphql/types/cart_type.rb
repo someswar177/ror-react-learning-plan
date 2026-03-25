@@ -8,5 +8,6 @@ module Types
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
     field :user, Types::UserType, null: false
+    field :cart_items, [Types::CartItemType], null: false
   end
 end

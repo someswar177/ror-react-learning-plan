@@ -14,6 +14,14 @@ module Types
       User.find_by(id:id)
     end
 
+    field :user_by_email, Types::UserType, null: true do
+      argument :email, String, required: true
+    end
+    def user_by_email(email:)
+      puts email
+      User.find_by(email: email)
+    end
+
     field :products, [Types::ProductType],null: false
     def products
       Product.all
@@ -24,6 +32,13 @@ module Types
     end
     def product(id:)
       Product.find_by(id:id)
+    end
+
+    field :cart, Types::CartType, null: true do
+      argument :user_id, ID, required: true
+    end
+    def cart(user_id:)
+      Cart.find_by(user_id: user_id)
     end
 
     field :node, Types::NodeType, null: true, description: "Fetches an object given its ID." do

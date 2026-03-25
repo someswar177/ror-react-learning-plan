@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_CART = gql`
-  query {
-    carts {
+  query GetCart($userId: ID!) {
+    cart(userId: $userId) {
       id
       cartItems {
         id
@@ -11,6 +11,7 @@ export const GET_CART = gql`
           id
           name
           price
+          description
         }
       }
     }
