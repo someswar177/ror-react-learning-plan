@@ -7,10 +7,10 @@ const ProductList = () => {
     const { loading, error, data } = useQuery(GET_PRODUCTS);
 
     if (loading) return <Spinner />;
-    if (error) return <Text>Error loading products</Text>;
+    if (error) return <Text>Error loading</Text>;
 
     return (
-        <SimpleGrid columns={[1, 2, 3]} spacing={6} p={5}>
+        <SimpleGrid columns={3} spacing={5}>
             {data.products.map((p) => (
                 <ProductCard key={p.id} product={p} />
             ))}

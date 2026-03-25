@@ -5,7 +5,7 @@ import { ADD_TO_CART } from "../operations/mutations/cartMutations";
 const ProductCard = ({ product }) => {
     const [addToCart] = useMutation(ADD_TO_CART);
 
-    const handleClick = () => {
+    const handleAdd = () => {
         addToCart({
             variables: { productId: product.id },
         });
@@ -16,7 +16,7 @@ const ProductCard = ({ product }) => {
             <Text fontWeight="bold">{product.name}</Text>
             <Text>₹{product.price}</Text>
 
-            <Button mt={2} colorScheme="blue" onClick={handleClick}>
+            <Button mt={2} onClick={handleAdd} colorScheme="blue">
                 Add to Cart
             </Button>
         </Box>

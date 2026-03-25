@@ -5,5 +5,6 @@ export const PRODUCT_FIELDS = gql`
     id
     name
     price
+    description
   }
 `;
