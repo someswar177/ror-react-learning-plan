@@ -1,6 +1,7 @@
 import { Button, HStack } from "@chakra-ui/react"
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
+import ProductList from "./components/ProductList";
 
 const GET_USERS = gql`
   query GetUsers {
@@ -20,10 +21,7 @@ function App() {
 
   return (
     <>
-    <HStack>
-      <Button>Click me</Button>
-      <Button>Click me</Button>
-    </HStack>
+      <ProductList />
     </>
   )
 }
