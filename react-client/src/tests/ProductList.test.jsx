@@ -1,9 +1,12 @@
 import { render, screen } from "./test-utils";
 import "@testing-library/jest-dom";
-import { test, expect } from "vitest";
+import { test, expect, vi } from "vitest";
 import { MockedProvider } from "@apollo/client/testing/react";
 import ProductList from "../components/ProductList";
 import { GET_PRODUCTS } from "../operations/queries/productQueries";
+
+// Mock window.alert since ProductCard (rendered by ProductList) uses alert()
+vi.stubGlobal("alert", vi.fn());
 
 const mocks = [
     {
