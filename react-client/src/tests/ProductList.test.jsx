@@ -8,9 +8,25 @@ import { GET_PRODUCTS } from "../operations/queries/productQueries";
 // Mock window.alert since ProductCard (rendered by ProductList) uses alert()
 vi.stubGlobal("alert", vi.fn());
 
+// Mock ResizeObserver for Chakra UI Slider
+if (typeof window !== "undefined") {
+    class MockResizeObserver {
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+    }
+    window.ResizeObserver = MockResizeObserver;
+}
+
 const mocks = [
     {
-        request: { query: GET_PRODUCTS },
+        request: {
+            query: GET_PRODUCTS,
+            variables: {
+                search: null,
+                maxPrice: 1000,
+            },
+        },
         result: {
             data: {
                 products: [

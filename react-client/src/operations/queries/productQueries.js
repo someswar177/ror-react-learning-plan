@@ -2,8 +2,8 @@ import { gql } from "@apollo/client";
 import { PRODUCT_FIELDS } from "../fragments/productFragments";
 
 export const GET_PRODUCTS = gql`
-  query {
-    products {
+  query GetProducts($search: String, $maxPrice: Float) {
+    products(search: $search, maxPrice: $maxPrice) {
       ...ProductFields
     }
   }

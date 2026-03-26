@@ -22,9 +22,22 @@ module Types
       User.find_by(email: email)
     end
 
-    field :products, [Types::ProductType],null: false
-    def products
-      Product.all
+    field :products, [Types::ProductType], null: false do
+      argument :search, String, required: false
+      argument :max_price, Float, required: false
+    end
+    def products(search: nil, max_price: nil)
+      products = Product.all
+
+      if search.present?
+        products = products.where("name ILIKE ?", "%#{search}%")
+      end
+
+      if max_price.present?
+        products = products.where("price <= ?", max_price)
+      end
+
+      products
     end
 
     field :product, Types::ProductType,null: true do
