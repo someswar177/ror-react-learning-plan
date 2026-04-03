@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { Button } from '../Button/Button';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 // A simple Modal component built from scratch using Box overlays.
 // Props:
@@ -9,6 +9,19 @@ import { useEffect } from 'react';
 // 3. content: the main message.
 // 4. onClose: a function we attach to the close button so it knows what to do.
 export const Modal = ({ isOpen, title, content, onClose }) => {
+  // We create a "Ref" to actually grab the physical Button element in the browser.
+  const closeBtnRef = useRef(null);
+
+  // A11y Feature: Auto-Focus Management!
+  // When the modal opens, we forcefully move the user's keyboard focus to the close button.
+  useEffect(() => {
+    if (isOpen && closeBtnRef.current) {
+      // The tiny setTimeout ensures the Modal has actually finished drawing on the screen 
+      // before we try to focus the button inside it!
+      setTimeout(() => closeBtnRef.current.focus(), 10);
+    }
+  }, [isOpen]);
+
   // A11y Feature: Keyboard Navigation!
   // If the Modal is open, we listen for the "Escape" key to close it.
   useEffect(() => {
@@ -55,7 +68,8 @@ export const Modal = ({ isOpen, title, content, onClose }) => {
         <Text id="modal-desc" mb="6" color="black">{content}</Text>
         
         {/* We use our Button again! When clicked, it fires the onClose function passed from outside */}
-        <Button label="Close" colorPalette="gray" onClick={onClose} />
+        {/* We attach 'closeBtnRef' to this button so our useEffect can auto-focus it! */}
+        <Button ref={closeBtnRef} label="Close" colorPalette="gray" onClick={onClose} />
       </Box>
     </Flex>
   );
