@@ -5,18 +5,23 @@ export default {
   component: Input,
 };
 
-// Story 1: A normal text input
-export const DefaultTextInput = {
+// Story 1: A well-labeled required input
+export const LabeledEmailInput = {
   args: {
-    placeholder: 'Enter your name...',
-    type: 'text',
+    id: 'email_field', // Matches Label
+    labelText: 'Email Address',
+    placeholder: 'e.g. name@example.com',
+    type: 'email',
+    isRequired: true,
   },
 };
 
-// Story 2: A password input (hides what you type)
-export const PasswordInput = {
+// Story 2: Showing an Error State
+export const ErrorInput = {
   args: {
-    placeholder: 'Enter a secret password...',
-    type: 'password',
+    id: 'username_field',
+    labelText: 'Username',
+    type: 'text',
+    isInvalid: true, // Screen readers will warn the user about this!
   },
 };

@@ -21,3 +21,13 @@ export const RedButton = {
     colorPalette: 'red',
   },
 };
+
+// Story 3: Icon Only Button (Where ARIA is absolutely Critical!)
+// Sighted users see a trash can, but Screen Readers need the ariaLabel.
+export const IconOnly = {
+  args: {
+    label: '🗑️',
+    colorPalette: 'gray',
+    ariaLabel: 'Delete Item',
+  },
+};
