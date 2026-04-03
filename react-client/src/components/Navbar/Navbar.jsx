@@ -7,15 +7,17 @@ import { Button } from '../Button/Button';
 // 2. isLoggedIn (boolean - true/false)
 export const Navbar = ({ logoText, isLoggedIn }) => {
   return (
-    <Flex
-      as="nav"
-      padding="1rem 2rem"
-      bg="gray.100"
-      justifyContent="space-between"
+    <Flex 
+      as="nav" 
+      aria-label="Main Navigation" // Tells screen readers THIS is the main site menu, not a footer menu!
+      padding="1rem 2rem" 
+      bg="gray.100" 
+      justifyContent="space-between" 
       alignItems="center"
     >
       <Box>
-        <Text fontWeight="bold" fontSize="2xl" color="black">{logoText}</Text>
+        {/* Semantic A11y: Making the logo the official H1 of the page */}
+        <Text as="h1" fontWeight="bold" fontSize="2xl" color="black">{logoText}</Text>
       </Box>
 
       <Box>

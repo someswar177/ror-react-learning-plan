@@ -8,11 +8,11 @@ import { Button } from '../Button/Button';
 // 3. buttonText (what the button at the bottom says)
 export const Card = ({ title, description, buttonText }) => {
   return (
-    <ChakraCard.Root width="320px">
+    <ChakraCard.Root width="320px" as="article" aria-labelledby="card-title">
       
       <ChakraCard.Header>
-        {/* We use Chakra's "Text" component here to make it bold */}
-        <Text fontWeight="bold" fontSize="xl">{title}</Text>
+        {/* Semantic A11y: 'as="h2"' makes it a true heading for screen readers, not just large text! */}
+        <Text id="card-title" as="h2" fontWeight="bold" fontSize="xl">{title}</Text>
       </ChakraCard.Header>
       
       <ChakraCard.Body>
