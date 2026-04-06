@@ -27,17 +27,14 @@ module Types
       argument :max_price, Float, required: false
     end
     def products(search: nil, max_price: nil)
-      products = Product.all
-
-      if search.present?
-        products = products.where("name ILIKE ?", "%#{search}%")
+      # If any search/filter params are provided, use Elasticsearch
+      if search.present? || max_price.present?
+        response = Product.search_with_filters(query: search, max_price: max_price)
+        response.records.to_a
+      else
+        # No filters → just return all products from Postgres (cheaper)
+        Product.all
       end
-
-      if max_price.present?
-        products = products.where("price <= ?", max_price)
-      end
-
-      products
     end
 
     field :product, Types::ProductType,null: true do
