@@ -57,3 +57,6 @@ gem "graphiql-rails", "~> 1.10", group: :development
 gem "strong_migrations", "~> 2.5"
 
 gem "rspec-rails", "~> 8.0"
+
+gem "elasticsearch-model", "~> 7.2"
+gem "elasticsearch-rails", "~> 7.2"
