@@ -30,6 +30,7 @@ services:
       DB_PASSWORD: postgres
       DB_NAME: rails_server_development
       RAILS_ENV: development
+      ELASTICSEARCH_URL: http://elasticsearch:9200
     depends_on:
       db:
         condition: service_healthy
@@ -49,6 +50,21 @@ services:
     depends_on:
       - api
 
+  elasticsearch:
+    image: elasticsearch:8.13.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+
 volumes:
   pgdata:
   rails_bundle:
+  elasticsearch_data:
