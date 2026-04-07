@@ -1,5 +1,6 @@
 class FizzBuzz
   def calculate(number)
-    "fizz" if number == 3
+    return "fizz" if number == 3
+    return "buzz" if number == 5
   end
 end
