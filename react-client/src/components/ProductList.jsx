@@ -7,7 +7,7 @@ import ProductCard from "./ProductCard";
 
 const ProductList = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [maxPrice, setMaxPrice] = useState(1000);
+  const [maxPrice, setMaxPrice] = useState(300000);
 
   const { loading, error, data } = useQuery(GET_PRODUCTS, {
     variables: {
