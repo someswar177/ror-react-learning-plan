@@ -1,4 +1,3 @@
-# spec/fizz_buzz_spec.rb
 require 'rails_helper'
 
 RSpec.describe "FizzBuzz" do
