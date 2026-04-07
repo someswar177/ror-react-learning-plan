@@ -1,0 +1,26 @@
+version: 2.1
+
+orbs:
+  ruby: circleci/ruby@2.1.0
+
+jobs:
+  test:
+    docker:
+      - image: cimg/ruby:3.3 # Matches your .ruby-version (3.3.x)
+    working_directory: ~/project/TDD-Practice # cd into the Rails app
+    steps:
+      - checkout:
+          path: ~/project # Checkout repo root, then working_directory takes effect
+      - ruby/install-deps
+      - run:
+          name: Run RSpec (TDD Tests)
+          command: bundle exec rspec --format documentation --color
+
+workflows:
+  tdd_practice:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only:
+                - day9-week2-part2
