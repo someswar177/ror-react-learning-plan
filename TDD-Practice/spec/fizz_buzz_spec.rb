@@ -23,4 +23,9 @@ RSpec.describe "FizzBuzz" do
     expect(fizz_buzz.calculate(13)).to eq(13)
     expect(fizz_buzz.calculate(14)).to eq(14)
   end
+
+  it "returns fizzbuzz for number 0" do
+    expect(fizz_buzz.calculate(0)).to eq("fizzbuzz")
+  end
+
 end
