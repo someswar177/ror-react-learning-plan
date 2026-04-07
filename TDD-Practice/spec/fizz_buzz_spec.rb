@@ -20,4 +20,9 @@ RSpec.describe "FizzBuzz" do
     fizz_buzz = FizzBuzz.new
     expect(fizz_buzz.calculate(10)).to eq("buzz")
   end
+
+  it "returns 'fizzbuzz' when passed 15" do
+    fizz_buzz = FizzBuzz.new
+    expect(fizz_buzz.calculate(15)).to eq("fizzbuzz")
+  end
 end
