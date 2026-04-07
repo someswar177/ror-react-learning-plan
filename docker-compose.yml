@@ -1,0 +1,70 @@
+
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ./rails-server
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./rails-server:/app
+      - rails_bundle:/usr/local/bundle
+    environment:
+      DB_HOST: db
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: rails_server_development
+      RAILS_ENV: development
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ./react-client
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./react-client:/app
+      - /app/node_modules
+    environment:
+      VITE_API_URL: http://localhost:3000/graphql
+    depends_on:
+      - api
+
+  elasticsearch:
+    image: elasticsearch:8.13.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+
+volumes:
+  pgdata:
+  rails_bundle:
+  elasticsearch_data:
