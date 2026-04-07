@@ -30,4 +30,14 @@ RSpec.describe "FizzBuzz" do
     fizz_buzz = FizzBuzz.new
     expect(fizz_buzz.calculate(30)).to eq("fizzbuzz")
   end
+
+  it "returns the number 1 when passed 1 which is not multiple of 3,5 or 15" do
+    fizz_buzz = FizzBuzz.new
+    expect(fizz_buzz.calculate(1)).to eq(1)
+  end
+
+  it "returns the number 2 when passed 2 which is not multiple of 3,5 or 15" do
+    fizz_buzz = FizzBuzz.new
+    expect(fizz_buzz.calculate(2)).to eq(2)
+  end
 end
