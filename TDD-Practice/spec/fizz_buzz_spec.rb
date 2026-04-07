@@ -6,8 +6,18 @@ RSpec.describe "FizzBuzz" do
     expect(fizz_buzz.calculate(3)).to eq("fizz")
   end
 
+  it "returns 'fizz' when passed 6" do
+    fizz_buzz = FizzBuzz.new
+    expect(fizz_buzz.calculate(6)).to eq("fizz")
+  end
+
   it "returns 'buzz' when passed 5" do
     fizz_buzz = FizzBuzz.new
     expect(fizz_buzz.calculate(5)).to eq("buzz")
+  end
+
+  it "returns 'buzz' when passed 10" do
+    fizz_buzz = FizzBuzz.new
+    expect(fizz_buzz.calculate(10)).to eq("buzz")
   end
 end
