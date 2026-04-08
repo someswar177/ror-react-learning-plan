@@ -20,4 +20,14 @@ RSpec.describe "StringCalculator" do
     calculator = StringCalculator.new
     expect(calculator.add("1,2,3")).to eq(6)
   end
+
+  it "returns the number 123 itself when a multi-digit number 123 is given" do
+    calculator = StringCalculator.new
+    expect(calculator.add("123")).to eq(123)
+  end
+
+  it "handles newline as delimiter between numbers" do
+    calculator = StringCalculator.new
+    expect(calculator.add("1\n2,3")).to eq(6)
+  end
 end
