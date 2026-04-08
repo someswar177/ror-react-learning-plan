@@ -1,20 +1,27 @@
 class StringCalculator
+    def delimiter_extractor(header)
+        if header.start_with?("//[") && header.end_with?("]")
+            delimiters = header.scan(/\[(.*?)\]/).flatten
+            delimiter = Regexp.union(delimiters)
+        else
+            delimiter = header[2]
+        end
+    end
+    
     def add(input)
         return 0 if input.empty?
         return input.to_i if input.length == 1
         delimiter = /[,\n]/ 
+
         if input.start_with?("//")
             header, input = input.split("\n", 2)
-            if header.start_with?("//[") && header.end_with?("]")
-                delimiters = header.scan(/\[(.*?)\]/).flatten
-                delimiter = Regexp.union(delimiters)
-            else
-                delimiter = header[2]
-            end
+            delimiter = delimiter_extractor(header)
         end
+
         numbers = input.split(delimiter)
         sum = 0
         negatives = []
+
         for number in numbers
             if number.to_i < 0
                 negatives << number.to_i
@@ -22,9 +29,11 @@ class StringCalculator
                 sum += number.to_i
             end
         end
+
         if negatives.any?
             raise "negatives not allowed: #{negatives.join(" ")}"
         end
+
         return sum
     end
 end

@@ -49,6 +49,7 @@ RSpec.describe "StringCalculator" do
   it "ignores numbers greater than 1000" do
     calculator = StringCalculator.new
     expect(calculator.add("1,2,1001")).to eq(3) 
+    expect(calculator.add("1,2,1000")).to eq(1003) 
   end
 
   it "supports multi-character delimiters wrapped in square brackets" do
