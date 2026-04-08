@@ -15,4 +15,9 @@ RSpec.describe "StringCalculator" do
     calculator = StringCalculator.new
     expect(calculator.add("1,2")).to eq(3)
   end
+
+  it "returns 6 for sum of three numbers(1,2,3) separated by default delimiter ( , )" do
+    calculator = StringCalculator.new
+    expect(calculator.add("1,2,3")).to eq(6)
+  end
 end
