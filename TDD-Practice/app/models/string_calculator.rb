@@ -14,8 +14,9 @@ class StringCalculator
         for number in numbers
             if number.to_i < 0
                 negatives << number.to_i
+            elsif number.to_i <= 1000
+                sum += number.to_i
             end
-            sum += number.to_i
         end
         if negatives.any?
             raise "negatives not allowed: #{negatives.join(" ")}"
