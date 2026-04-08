@@ -6,7 +6,8 @@ class StringCalculator
         if input.start_with?("//")
             header, input = input.split("\n", 2)
             if header.start_with?("//[") && header.end_with?("]")
-                delimiter = header[3..-2]
+                delimiters = header.scan(/\[(.*?)\]/).flatten
+                delimiter = Regexp.union(delimiters)
             else
                 delimiter = header[2]
             end
