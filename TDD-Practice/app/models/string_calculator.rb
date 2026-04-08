@@ -2,7 +2,13 @@ class StringCalculator
     def add(input)
         return 0 if input.empty?
         return input.to_i if input.length == 1
-        numbers = input.split(/[,\n]/)
+        delimiter = /[,\n]/ 
+        if input.start_with?("//")
+            delimiter = input[2]
+            input = input.split("\n")[1]
+            # //.to_i is returning 0 so we need to remove it from the input string
+        end
+        numbers = input.split(delimiter)
         sum = 0
         for number in numbers
             sum += number.to_i
