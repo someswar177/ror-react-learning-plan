@@ -10,15 +10,15 @@ class StringCalculator
         end
         numbers = input.split(delimiter)
         sum = 0
-        negative = nil
+        negatives = []
         for number in numbers
             if number.to_i < 0
-                negative = number.to_i
+                negatives << number.to_i
             end
             sum += number.to_i
         end
-        if negative != nil
-            raise "negatives not allowed: #{negative}"
+        if negatives.any?
+            raise "negatives not allowed: #{negatives.join(" ")}"
         end
         return sum
     end
