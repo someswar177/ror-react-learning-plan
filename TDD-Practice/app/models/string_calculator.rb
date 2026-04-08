@@ -1,18 +1,9 @@
-class StringCalculator
-    def delimiter_extractor(header)
-        if header.start_with?("//[") && header.end_with?("]")
-            delimiters = header.scan(/\[(.*?)\]/).flatten
-            delimiter = Regexp.union(delimiters)
-        else
-            delimiter = header[2]
-        end
-    end
-    
+class StringCalculator    
     def add(input)
         return 0 if input.empty?
         return input.to_i if input.length == 1
-        delimiter = /[,\n]/ 
 
+        delimiter = /[,\n]/
         if input.start_with?("//")
             header, input = input.split("\n", 2)
             delimiter = delimiter_extractor(header)
@@ -35,5 +26,14 @@ class StringCalculator
         end
 
         return sum
+    end
+
+    def delimiter_extractor(header)
+        if header.start_with?("//[") && header.end_with?("]")
+            delimiters = header.scan(/\[(.*?)\]/).flatten
+            delimiter = Regexp.union(delimiters)
+        else
+            delimiter = header[2]
+        end
     end
 end
