@@ -50,4 +50,9 @@ RSpec.describe "StringCalculator" do
     calculator = StringCalculator.new
     expect(calculator.add("1,2,1001")).to eq(3) 
   end
+
+  it "supports multi-character delimiters wrapped in square brackets" do
+    calculator = StringCalculator.new
+    expect(calculator.add("//[***]\n1***2***3")).to eq(6)
+  end
 end

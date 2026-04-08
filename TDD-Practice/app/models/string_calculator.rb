@@ -4,9 +4,12 @@ class StringCalculator
         return input.to_i if input.length == 1
         delimiter = /[,\n]/ 
         if input.start_with?("//")
-            delimiter = input[2]
-            input = input.split("\n")[1]
-            # //.to_i is returning 0 so we need to remove it from the input string
+            header, input = input.split("\n", 2)
+            if header.start_with?("//[") && header.end_with?("]")
+                delimiter = header[3..-2]
+            else
+                delimiter = header[2]
+            end
         end
         numbers = input.split(delimiter)
         sum = 0
